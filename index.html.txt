@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Electronics – Complete Answers</title>
+<style>
+  :root {
+    --blue: #185FA5; --blue-l: #E6F1FB; --blue-d: #0C447C;
+    --teal: #0F6E56; --teal-l: #E1F5EE; --teal-d: #085041;
+    --amber: #BA7517; --amber-l: #FAEEDA; --amber-d: #633806;
+    --purple: #534AB7; --purple-l: #EEEDFE; --purple-d: #3C3489;
+    --coral: #993C1D; --coral-l: #FAECE7; --coral-d: #4A1B0C;
+    --gray: #5F5E5A; --gray-l: #F1EFE8; --gray-d: #444441;
+    --text: #1a1a18; --text2: #5F5E5A; --border: #d3d1c7;
+    --bg: #ffffff; --bg2: #F9F8F4;
+    --radius: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --text:#e8e6de; --text2:#9c9a92; --border:#3d3d3a; --bg:#1a1a18; --bg2:#232320;
+      --blue-l:#042C53; --teal-l:#04342C; --amber-l:#412402; --purple-l:#26215C;
+      --coral-l:#4A1B0C; --gray-l:#2C2C2A; }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.7; }
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 20px 60px; }
+  h1 { font-size: 26px; font-weight: 600; margin-bottom: 6px; }
+  h2 { font-size: 20px; font-weight: 600; margin: 40px 0 12px; border-left: 4px solid var(--blue); padding-left: 12px; color: var(--blue-d); }
+  h3 { font-size: 16px; font-weight: 600; margin: 24px 0 8px; color: var(--text); }
+  p { margin-bottom: 10px; }
+  .subtitle { color: var(--text2); font-size: 14px; margin-bottom: 30px; }
+  .toc { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 32px; }
+  .toc h3 { margin-top: 0; margin-bottom: 10px; }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin: 4px 0; }
+  .toc a { color: var(--blue); text-decoration: none; font-size: 14px; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* Truth Table */
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+  th { background: var(--blue); color: #fff; padding: 8px 12px; text-align: center; font-weight: 600; }
+  td { padding: 7px 12px; text-align: center; border-bottom: 1px solid var(--border); }
+  tr:nth-child(even) td { background: var(--bg2); }
+  tr:last-child td { border-bottom: none; }
+  .highlight td { background: var(--amber-l) !important; color: var(--amber-d); font-weight: 600; }
+
+  /* Diagram containers */
+  .diagram { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin: 16px 0; overflow-x: auto; }
+  svg { max-width: 100%; height: auto; }
+
+  /* Info boxes */
+  .info { background: var(--blue-l); border-left: 4px solid var(--blue); border-radius: 0 var(--radius) var(--radius) 0; padding: 12px 16px; margin: 12px 0; font-size: 14px; }
+  .formula { background: var(--purple-l); border-left: 4px solid var(--purple); border-radius: 0 var(--radius) var(--radius) 0; padding: 12px 16px; margin: 12px 0; font-size: 14px; font-family: monospace; }
+  .note { background: var(--amber-l); border-left: 4px solid var(--amber); border-radius: 0 var(--radius) var(--radius) 0; padding: 12px 16px; margin: 12px 0; font-size: 14px; }
+  .success { background: var(--teal-l); border-left: 4px solid var(--teal); border-radius: 0 var(--radius) var(--radius) 0; padding: 12px 16px; margin: 12px 0; font-size: 14px; }
+
+  /* Section card */
+  .section { border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 32px; }
+  .badge { display: inline-block; background: var(--blue-l); color: var(--blue-d); font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+  .badge.five { background: var(--amber-l); color: var(--amber-d); }
+
+  .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+  @media (max-width: 600px) { .cols2 { grid-template-columns: 1fr; } }
+  .gate-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; }
+  .gate-box h4 { font-size: 14px; margin-bottom: 8px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Digital Electronics – Complete Study Guide</h1>
+<p class="subtitle">5 Marks Questions + Important Questions with full explanations, truth tables &amp; circuit diagrams</p>
+
+<div class="toc">
+  <h3>📋 Table of Contents</h3>
+  <ol>
+    <li><a href="#jk">JK Flip-Flop (Truth Table + Working)</a></li>
+    <li><a href="#full-adder">Full Adder using 3:8 Decoder</a></li>
+    <li><a href="#full-sub">Full Subtractor using 3:8 Decoder</a></li>
+    <li><a href="#mux81">8:1 MUX using Function Values</a></li>
+    <li><a href="#convert">Flip-Flop Conversions (D→T, SR→JK)</a></li>
+    <li><a href="#demux">Demultiplexer – Explain + 1:16 Design</a></li>
+    <li><a href="#half-adder">Truth Table &amp; Logic Diagram of Half Adder</a></li>
+    <li><a href="#adv-mux">Advantages of Multiplexer</a></li>
+    <li><a href="#mux41">4:1 MUX using 2:1 MUX</a></li>
+    <li><a href="#comb">Combinational Circuit</a></li>
+    <li><a href="#counter">Counter and Types</a></li>
+    <li><a href="#ripple">Ripple Counter (MOD-10)</a></li>
+    <li><a href="#race">Race Around Condition in JK Flip-Flop</a></li>
+    <li><a href="#mux-demux-diff">MUX vs DEMUX Difference</a></li>
+    <li><a href="#select">32:1 MUX – Number of Select Lines</a></li>
+    <li><a href="#ff-apps">Applications of Flip-Flop</a></li>
+    <li><a href="#steps">Steps for Combinational Circuit Design</a></li>
+    <li><a href="#full-two-half">Full Adder using 2 Half Adders</a></li>
+    <li><a href="#shift">Classification of Shift Register</a></li>
+    <li><a href="#sync-async">Synchronous vs Asynchronous Counter</a></li>
+    <li><a href="#sequential">Sequential Circuit – Definition + Example</a></li>
+    <li><a href="#decoder-apps">Applications of Decoder</a></li>
+  </ol>
+</div>
+
+<!-- ============================= JK FLIP FLOP ============================= -->
+<div class="section" id="jk">
+  <span class="badge five">5 Marks</span>
+  <h2 style="margin-top:8px">1. JK Flip-Flop – Truth Table &amp; Working</h2>
+
+  <p>A <strong>JK Flip-Flop</strong> is the most versatile flip-flop. It eliminates the invalid state of the SR flip-flop. It has two inputs <strong>J</strong> (Set) and <strong>K</strong> (Reset), along with a Clock (CLK).</p>
+
+  <h3>Truth Table</h3>
+  <table>
+    <tr><th>J</th><th>K</th><th>CLK</th><th>Q (next)</th><th>Q̄ (next)</th><th>Operation</th></tr>
+    <tr><td>0</td><td>0</td><td>↑</td><td>Q</td><td>Q̄</td><td>No Change</td></tr>
+    <tr><td>0</td><td>1</td><td>↑</td><td>0</td><td>1</td><td>RESET</td></tr>
+    <tr><td>1</td><td>0</td><td>↑</td><td>1</td><td>0</td><td>SET</td></tr>
+    <tr class="highlight"><td>1</td><td>1</td><td>↑</td><td>Q̄</td><td>Q</td><td>Toggle (complement)</td></tr>
+  </table>
+
+  <div class="info">💡 Key difference from SR: When J=1, K=1 the output <strong>toggles</strong> (flips) instead of going into an invalid state.</div>
+
+  <h3>Characteristic Equation</h3>
+  <div class="formula">Q(next) = J·Q̄ + K̄·Q</div>
+
+  <h3>Logic Diagram of JK Flip-Flop</h3>
+  <div class="diagram">
+    <svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+      <!-- SR Latch box -->
+      <rect x="280" y="60" width="140" height="140" rx="8" fill="none" stroke="#185FA5" stroke-width="2"/>
+      <text x="350" y="110" text-anchor="middle" font-size="15" font-weight="600" fill="#185FA5">SR</text>
+      <text x="350" y="130" text-anchor="middle" font-size="15" font-weight="600" fill="#185FA5">LATCH</text>
+
+      <!-- AND gate for J (top AND) -->
+      <rect x="170" y="75" width="80" height="40" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1.5"/>
+      <text x="210" y="100" text-anchor="middle" font-size="13" fill="#0C447C">AND</text>
+
+      <!-- AND gate for K (bottom AND) -->
+      <rect x="170" y="145" width="80" height="40" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1.5"/>
+      <text x="210" y="170" text-anchor="middle" font-size="13" fill="#0C447C">AND</text>
+
+      <!-- Input J -->
+      <text x="50" y="95" font-size="14" font-weight="600" fill="#BA7517">J</text>
+      <line x1="65" y1="92" x2="170" y2="92" stroke="#BA7517" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- Input K -->
+      <text x="50" y="167" font-size="14" font-weight="600" fill="#0F6E56">K</text>
+      <line x1="65" y1="164" x2="170" y2="164" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- CLK to both AND gates -->
+      <text x="50" y="137" font-size="14" font-weight="600" fill="#534AB7">CLK</text>
+      <line x1="85" y1="134" x2="120" y2="134" stroke="#534AB7" stroke-width="1.5"/>
+      <line x1="120" y1="134" x2="120" y2="108" stroke="#534AB7" stroke-width="1.5"/>
+      <line x1="120" y1="108" x2="170" y2="108" stroke="#534AB7" stroke-width="1.5" marker-end="url(#arr)"/>
+      <line x1="120" y1="134" x2="120" y2="160" stroke="#534AB7" stroke-width="1.5"/>
+      <line x1="120" y1="160" x2="170" y2="160" stroke="#534AB7" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- Feedback Q̄ to J-AND and Q to K-AND -->
+      <line x1="460" y1="88" x2="500" y2="88" stroke="#BA7517" stroke-width="1.5"/>
+      <line x1="500" y1="88" x2="500" y2="175" stroke="#BA7517" stroke-width="1.5"/>
+      <line x1="145" y1="175" x2="145" y2="175" stroke="#BA7517" stroke-width="1.5"/>
+      <line x1="500" y1="175" x2="145" y2="175" stroke="#BA7517" stroke-width="1.5"/>
+      <line x1="145" y1="175" x2="170" y2="175" stroke="#BA7517" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="510" y="135" font-size="11" fill="#BA7517">Q̄→K</text>
+
+      <line x1="460" y1="172" x2="520" y2="172" stroke="#0F6E56" stroke-width="1.5"/>
+      <line x1="520" y1="172" x2="520" y2="95" stroke="#0F6E56" stroke-width="1.5"/>
+      <line x1="140" y1="95" x2="520" y2="95" stroke="#0F6E56" stroke-width="1.5"/>
+      <line x1="140" y1="95" x2="170" y2="95" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="530" y="145" font-size="11" fill="#0F6E56">Q→J</text>
+
+      <!-- AND to Latch S -->
+      <line x1="250" y1="92" x2="280" y2="92" stroke="#333" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="265" y="88" font-size="11" fill="#333">S</text>
+
+      <!-- AND to Latch R -->
+      <line x1="250" y1="165" x2="280" y2="165" stroke="#333" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="265" y="161" font-size="11" fill="#333">R</text>
+
+      <!-- Outputs -->
+      <line x1="420" y1="92" x2="460" y2="92" stroke="#333" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="468" y="96" font-size="14" font-weight="600" fill="#333">Q</text>
+      <line x1="420" y1="168" x2="460" y2="168" stroke="#333" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="468" y="172" font-size="14" font-weight="600" fill="#333">Q̄</text>
+
+      <text x="350" y="230" text-anchor="middle" font-size="13" fill="#5F5E5A">JK Flip-Flop using SR Latch with feedback</text>
+    </svg>
+  </div>
+
+  <h3>Working Explanation</h3>
+  <ul style="padding-left:20px;line-height:2">
+    <li><strong>J=0, K=0:</strong> Both AND gates output 0 → SR = 00 → No change (Memory state)</li>
+    <li><strong>J=0, K=1:</strong> With Q=1 feedback → R=1, S=0 → Output resets to 0</li>
+    <li><strong>J=1, K=0:</strong> With Q̄=1 feedback → S=1, R=0 → Output sets to 1</li>
+    <li><strong>J=1, K=1:</strong> Output complements/toggles on each clock pulse</li>
+  </ul>
+</div>
+
+<!-- ============================= FULL ADDER using 3:8 DECODER ============================= -->
+<div class="section" id="full-adder">
+  <span class="badge five">5 Marks</span>
+  <h2 style="margin-top:8px">2. Full Adder using 3:8 Decoder</h2>
+
+  <p>A <strong>Full Adder</strong> adds three binary bits: A, B, and Carry-in (Cin). Outputs are Sum (S) and Carry-out (Cout).</p>
+
+  <h3>Truth Table</h3>
+  <table>
+    <tr><th>A</th><th>B</th><th>Cin</th><th>Sum</th><th>Cout</th><th>Minterm</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>m₀</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>m₁</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>m₂</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>m₃</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>m₄</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>m₅</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>m₆</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>m₇</td></tr>
+  </table>
+
+  <div class="formula">
+    Sum = Σ(1,2,4,7) = m₁ + m₂ + m₄ + m₇<br>
+    Cout = Σ(3,5,6,7) = m₃ + m₅ + m₆ + m₇
+  </div>
+
+  <h3>3:8 Decoder-based Design</h3>
+  <p>A 3:8 decoder with inputs A, B, Cin generates all 8 minterms (m₀–m₇). We use OR gates to combine required minterms.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+      <!-- Decoder box -->
+      <rect x="200" y="30" width="120" height="230" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="2"/>
+      <text x="260" y="55" text-anchor="middle" font-size="13" font-weight="700" fill="#0C447C">3:8</text>
+      <text x="260" y="72" text-anchor="middle" font-size="13" font-weight="700" fill="#0C447C">Decoder</text>
+
+      <!-- Inputs -->
+      <text x="80" y="100" font-size="13" font-weight="600" fill="#BA7517">A</text>
+      <line x1="95" y1="97" x2="200" y2="97" stroke="#BA7517" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <text x="80" y="145" font-size="13" font-weight="600" fill="#0F6E56">B</text>
+      <line x1="95" y1="142" x2="200" y2="142" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <text x="70" y="190" font-size="13" font-weight="600" fill="#534AB7">Cin</text>
+      <line x1="95" y1="187" x2="200" y2="187" stroke="#534AB7" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+      <!-- Minterm outputs from decoder -->
+      <text x="332" y="48" font-size="11" fill="#333">m₀</text>
+      <text x="332" y="75" font-size="11" fill="#333">m₁</text>
+      <text x="332" y="102" font-size="11" fill="#333">m₂</text>
+      <text x="332" y="129" font-size="11" fill="#333">m₃</text>
+      <text x="332" y="156" font-size="11" fill="#333">m₄</text>
+      <text x="332" y="183" font-size="11" fill="#333">m₅</text>
+      <text x="332" y="210" font-size="11" fill="#333">m₆</text>
+      <text x="332" y="237" font-size="11" fill="#333">m₇</text>
+
+      <line x1="320" y1="45" x2="355" y2="45" stroke="#999" stroke-width="1"/>
+      <line x1="320" y1="72" x2="355" y2="72" stroke="#999" stroke-width="1"/>
+      <line x1="320" y1="99" x2="355" y2="99" stroke="#999" stroke-width="1"/>
+      <line x1="320" y1="126" x2="355" y2="126" stroke="#999" stroke-width="1"/>
+      <line x1="320" y1="153" x2="355" y2="153" stroke="#999" stroke-width="1"/>
+      <line x1="320" y1="180" x2="355" y2="180" stroke="#999" stroke-width="1"/>
+      <line x1="320" y1="207" x2="355" y2="207" stroke="#999" stroke-width="1"/>
+      <line x1="320" y1="234" x2="355" y2="234" stroke="#999" stroke-width="1"/>
+
+      <!-- OR gate for SUM (m1,m2,m4,m7) -->
+      <rect x="380" y="50" width="80" height="44" rx="8" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.5"/>
+      <text x="420" y="68" text-anchor="middle" font-size="11" font-weight="600" fill="#633806">OR</text>
+      <text x="420" y="82" text-anchor="middle" font-size="10" fill="#633806">m1,m2,m4,m7</text>
+
+      <line x1="355" y1="72" x2="380" y2="66" stroke="#BA7517" stroke-width="1"/>
+      <line x1="355" y1="99" x2="380" y2="72" stroke="#BA7517" stroke-width="1"/>
+      <line x1="355" y1="153" x2="380" y2="78" stroke="#BA7517" stroke-width="1"/>
+      <line x1="355" y1="234" x2="380" y2="84" stroke="#BA7517" stroke-width="1"/>
+      <line x1="460" y1="72" x2="510" y2="72" stroke="#BA7517" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <text x="515" y="76" font-size="14" font-weight="700" fill="#BA7517">SUM</text>
+
+      <!-- OR gate for CARRY (m3,m5,m6,m7) -->
+      <rect x="380" y="160" width="80" height="44" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.5"/>
+      <text x="420" y="178" text-anchor="middle" font-size="11" font-weight="600" fill="#085041">OR</text>
+      <text x="420" y="192" text-anchor="middle" font-size="10" fill="#085041">m3,m5,m6,m7</text>
+
+      <line x1="355" y1="126" x2="380" y2="174" stroke="#0F6E56" stroke-width="1"/>
+      <line x1="355" y1="180" x2="380" y2="180" stroke="#0F6E56" stroke-width="1"/>
+      <line x1="355" y1="207" x2="380" y2="186" stroke="#0F6E56" stroke-width="1"/>
+      <line x1="355" y1="234" x2="380" y2="192" stroke="#0F6E56" stroke-width="1"/>
+      <line x1="460" y1="182" x2="510" y2="182" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <text x="515" y="186" font-size="13" font-weight="700" fill="#0F6E56">Cout</text>
+
+      <text x="340" y="278" text-anchor="middle" font-size="12" fill="#5F5E5A">Full Adder using 3:8 Decoder + OR gates</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================= FULL SUBTRACTOR ============================= -->
+<div class="section" id="full-sub">
+  <span class="badge five">5 Marks</span>
+  <h2 style="margin-top:8px">3. Full Subtractor using 3:8 Decoder</h2>
+
+  <p>A <strong>Full Subtractor</strong> performs A − B − Bin. Outputs: Difference (D) and Borrow-out (Bout).</p>
+
+  <h3>Truth Table</h3>
+  <table>
+    <tr><th>A</th><th>B</th><th>Bin</th><th>Diff</th><th>Bout</th><th>Minterm</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>m₀</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>m₁</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>m₂</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>m₃</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>m₄</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>m₅</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>m₆</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>m₇</td></tr>
+  </table>
+
+  <div class="formula">
+    Diff = Σ(1,2,4,7) → OR gate with m₁, m₂, m₄, m₇<br>
+    Bout = Σ(1,2,3,7) → OR gate with m₁, m₂, m₃, m₇
+  </div>
+
+  <div class="note">⚠️ Same 3:8 decoder structure as Full Adder, only OR gate connections change!</div>
+</div>
+
+<!-- ============================= 8:1 MUX ============================= -->
+<div class="section" id="mux81">
+  <span class="badge five">5 Marks</span>
+  <h2 style="margin-top:8px">4. Design 8:1 MUX using Function Values</h2>
+
+  <p>An <strong>8:1 Multiplexer</strong> selects one of 8 inputs using 3 select lines (S₂, S₁, S₀).</p>
+
+  <h3>Structure</h3>
+  <table>
+    <tr><th>S₂</th><th>S₁</th><th>S₀</th><th>Output Y</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>I₀</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>I₁</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>I₂</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>I₃</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>I₄</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>I₅</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>I₆</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>I₇</td></tr>
+  </table>
+
+  <div class="formula">Y = S̄₂·S̄₁·S̄₀·I₀ + S̄₂·S̄₁·S₀·I₁ + S̄₂·S₁·S̄₀·I₂ + S̄₂·S₁·S₀·I₃ + S₂·S̄₁·S̄₀·I₄ + S₂·S̄₁·S₀·I₅ + S₂·S₁·S̄₀·I₆ + S₂·S₁·S₀·I₇</div>
+
+  <h3>Example: Implement F(A,B,C) = Σ(1,3,5,7) using 8:1 MUX</h3>
+  <p>Connect A→S₂, B→S₁, C→S₀. Set I₀=0, I₁=1, I₂=0, I₃=1, I₄=0, I₅=1, I₆=0, I₇=1 (i.e., connect I₁,I₃,I₅,I₇ to logic 1, rest to 0).</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="arr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+      <!-- MUX box (trapezoid simulation via polygon) -->
+      <polygon points="260,20 420,40 420,220 260,240" fill="#E6F1FB" stroke="#185FA5" stroke-width="2"/>
+      <text x="340" y="125" text-anchor="middle" font-size="16" font-weight="700" fill="#0C447C">8:1</text>
+      <text x="340" y="143" text-anchor="middle" font-size="14" font-weight="600" fill="#0C447C">MUX</text>
+
+      <!-- Inputs I0-I7 -->
+      <text x="200" y="34" font-size="11" fill="#333">I₀=0</text><line x1="235" y1="31" x2="263" y2="45" stroke="#999" stroke-width="1" marker-end="url(#arr3)"/>
+      <text x="200" y="64" font-size="11" fill="#333">I₁=1</text><line x1="235" y1="61" x2="263" y2="67" stroke="#BA7517" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <text x="200" y="94" font-size="11" fill="#333">I₂=0</text><line x1="235" y1="91" x2="263" y2="88" stroke="#999" stroke-width="1" marker-end="url(#arr3)"/>
+      <text x="200" y="124" font-size="11" fill="#333">I₃=1</text><line x1="235" y1="121" x2="263" y2="110" stroke="#BA7517" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <text x="200" y="154" font-size="11" fill="#333">I₄=0</text><line x1="235" y1="151" x2="263" y2="143" stroke="#999" stroke-width="1" marker-end="url(#arr3)"/>
+      <text x="200" y="184" font-size="11" fill="#333">I₅=1</text><line x1="235" y1="181" x2="263" y2="165" stroke="#BA7517" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <text x="200" y="214" font-size="11" fill="#333">I₆=0</text><line x1="235" y1="211" x2="263" y2="188" stroke="#999" stroke-width="1" marker-end="url(#arr3)"/>
+      <text x="200" y="244" font-size="11" fill="#333">I₇=1</text><line x1="235" y1="241" x2="263" y2="210" stroke="#BA7517" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+      <!-- Select lines bottom -->
+      <text x="290" y="252" font-size="12" font-weight="600" fill="#534AB7">S₂(A)</text>
+      <text x="330" y="252" font-size="12" font-weight="600" fill="#534AB7">S₁(B)</text>
+      <text x="370" y="252" font-size="12" font-weight="600" fill="#534AB7">S₀(C)</text>
+      <line x1="305" y1="248" x2="305" y2="235" stroke="#534AB7" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <line x1="345" y1="248" x2="345" y2="235" stroke="#534AB7" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <line x1="380" y1="248" x2="380" y2="235" stroke="#534AB7" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+      <!-- Output -->
+      <line x1="420" y1="130" x2="490" y2="130" stroke="#0F6E56" stroke-width="2" marker-end="url(#arr3)"/>
+      <text x="496" y="134" font-size="14" font-weight="700" fill="#0F6E56">Y</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================= FLIP-FLOP CONVERSIONS ============================= -->
+<div class="section" id="convert">
+  <span class="badge five">5 Marks</span>
+  <h2 style="margin-top:8px">5. Flip-Flop Conversions</h2>
+
+  <h3>A. D to T Flip-Flop Conversion</h3>
+  <p>T flip-flop toggles when T=1. We derive D in terms of T and current state Q.</p>
+  <table>
+    <tr><th>T</th><th>Q</th><th>Q(next)</th><th>D (required)</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+  </table>
+  <div class="formula">D = T ⊕ Q &nbsp; (XOR of T and Q)</div>
+  <div class="info">Connect an XOR gate with inputs T and Q, and feed its output as D to the D flip-flop.</div>
+
+  <h3>B. SR to JK Flip-Flop Conversion</h3>
+  <p>JK eliminates invalid state of SR. Map JK inputs to SR inputs:</p>
+  <table>
+    <tr><th>J</th><th>K</th><th>Q</th><th>Q(next)</th><th>S</th><th>R</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+  </table>
+  <div class="formula">S = J·Q̄ &nbsp;&nbsp; R = K·Q</div>
+</div>
+
+<!-- ============================= DEMUX ============================= -->
+<div class="section" id="demux">
+  <span class="badge five">5 Marks</span>
+  <h2 style="margin-top:8px">6. Demultiplexer – Explain &amp; Design 1:16 DEMUX</h2>
+
+  <p>A <strong>Demultiplexer (DEMUX)</strong> takes one input and routes it to one of N outputs based on select lines. It is the reverse of a multiplexer.</p>
+
+  <table>
+    <tr><th>Type</th><th>Inputs</th><th>Select Lines</th><th>Outputs</th></tr>
+    <tr><td>1:2</td><td>1</td><td>1</td><td>2</td></tr>
+    <tr><td>1:4</td><td>1</td><td>2</td><td>4</td></tr>
+    <tr><td>1:8</td><td>1</td><td>3</td><td>8</td></tr>
+    <tr class="highlight"><td>1:16</td><td>1</td><td>4</td><td>16</td></tr>
+  </table>
+
+  <h3>1:16 DEMUX using two 1:8 DEMUXes</h3>
+  <div class="formula">Use S₃ as enable select: when S₃=0, first 1:8 DEMUX active (outputs Y₀–Y₇); when S₃=1, second 1:8 DEMUX active (outputs Y₈–Y₁₅)</div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 680 240" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="arr4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+      <!-- Input -->
+      <text x="30" y="120" font-size="13" font-weight="600" fill="#333">Input</text>
+      <line x1="80" y1="117" x2="130" y2="117" stroke="#333" stroke-width="1.5" marker-end="url(#arr4)"/>
+
+      <!-- NOT gate for S3 -->
+      <polygon points="130,105 160,117 130,129" fill="#EEEDFE" stroke="#534AB7" stroke-width="1.5"/>
+      <circle cx="163" cy="117" r="4" fill="none" stroke="#534AB7" stroke-width="1.5"/>
+      <line x1="168" y1="117" x2="200" y2="80" stroke="#534AB7" stroke-width="1.2" stroke-dasharray="4,2"/>
+      <text x="135" y="145" font-size="11" fill="#534AB7">S₃ (NOT)</text>
+
+      <!-- S3 direct -->
+      <line x1="60" y1="155" x2="200" y2="160" stroke="#534AB7" stroke-width="1.2" stroke-dasharray="4,2"/>
+      <text x="30" y="158" font-size="11" font-weight="600" fill="#534AB7">S₃</text>
+
+      <!-- 1:8 DEMUX top -->
+      <rect x="200" y="30" width="120" height="80" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="2"/>
+      <text x="260" y="65" text-anchor="middle" font-size="13" font-weight="700" fill="#085041">1:8 DEMUX</text>
+      <text x="260" y="82" text-anchor="middle" font-size="11" fill="#085041">(EN=S̄₃)</text>
+
+      <!-- 1:8 DEMUX bottom -->
+      <rect x="200" y="140" width="120" height="80" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width="2"/>
+      <text x="260" y="175" text-anchor="middle" font-size="13" font-weight="700" fill="#4A1B0C">1:8 DEMUX</text>
+      <text x="260" y="192" text-anchor="middle" font-size="11" fill="#4A1B0C">(EN=S₃)</text>
+
+      <!-- Outputs top DEMUX -->
+      <line x1="320" y1="55" x2="380" y2="55" stroke="#0F6E56" stroke-width="1" marker-end="url(#arr4)"/>
+      <text x="385" y="59" font-size="11" fill="#0F6E56">Y₀</text>
+      <text x="385" y="75" font-size="11" fill="#0F6E56">Y₁</text>
+      <text x="385" y="91" font-size="11" fill="#0F6E56">... Y₇</text>
+      <line x1="320" y1="70" x2="380" y2="70" stroke="#0F6E56" stroke-width="1" marker-end="url(#arr4)"/>
+      <line x1="320" y1="85" x2="380" y2="85" stroke="#0F6E56" stroke-width="1" marker-end="url(#arr4)"/>
+
+      <!-- Outputs bottom DEMUX -->
+      <line x1="320" y1="163" x2="380" y2="163" stroke="#993C1D" stroke-width="1" marker-end="url(#arr4)"/>
+      <text x="385" y="167" font-size="11" fill="#993C1D">Y₈</text>
+      <text x="385" y="183" font-size="11" fill="#993C1D">Y₉</text>
+      <text x="385" y="199" font-size="11" fill="#993C1D">... Y₁₅</text>
+      <line x1="320" y1="178" x2="380" y2="178" stroke="#993C1D" stroke-width="1" marker-end="url(#arr4)"/>
+      <line x1="320" y1="193" x2="380" y2="193" stroke="#993C1D" stroke-width="1" marker-end="url(#arr4)"/>
+
+      <!-- Select lines S0-S2 -->
+      <line x1="260" y1="220" x2="260" y2="220" stroke="#999" stroke-width="1"/>
+      <text x="175" y="235" font-size="12" fill="#5F5E5A">S₀, S₁, S₂ → both DEMUXes</text>
+
+      <text x="340" y="230" text-anchor="middle" font-size="12" fill="#5F5E5A">1:16 DEMUX using two 1:8 DEMUXes</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================= HALF ADDER ============================= -->
+<div class="section" id="half-adder">
+  <h2>7. Half Adder – Truth Table &amp; Logic Diagram</h2>
+
+  <p>A <strong>Half Adder</strong> adds two single bits A and B. Outputs: Sum (S) and Carry (C).</p>
+
+  <div class="cols2">
+    <div>
+      <h3>Truth Table</h3>
+      <table>
+        <tr><th>A</th><th>B</th><th>Sum (S)</th><th>Carry (C)</th></tr>
+        <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+        <tr><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+        <tr><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Boolean Expressions</h3>
+      <div class="formula">S = A ⊕ B &nbsp; (XOR)<br>C = A · B &nbsp; (AND)</div>
+      <div class="info">Limitation: Cannot handle carry-in from previous stage!</div>
+    </div>
+  </div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 680 160" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="arr5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+      <!-- Inputs -->
+      <text x="40" y="55" font-size="14" font-weight="700" fill="#BA7517">A</text>
+      <text x="40" y="105" font-size="14" font-weight="700" fill="#0F6E56">B</text>
+      <line x1="55" y1="52" x2="130" y2="52" stroke="#BA7517" stroke-width="1.5"/>
+      <line x1="55" y1="102" x2="130" y2="102" stroke="#0F6E56" stroke-width="1.5"/>
+
+      <!-- Junction dots -->
+      <circle cx="130" cy="52" r="4" fill="#BA7517"/>
+      <circle cx="130" cy="102" r="4" fill="#0F6E56"/>
+
+      <!-- XOR gate (Sum) -->
+      <rect x="150" y="32" width="80" height="40" rx="8" fill="#FAEEDA" stroke="#BA7517" stroke-width="2"/>
+      <text x="190" y="57" text-anchor="middle" font-size="14" font-weight="700" fill="#633806">XOR</text>
+      <line x1="130" y1="52" x2="150" y2="45" stroke="#BA7517" stroke-width="1.5" marker-end="url(#arr5)"/>
+      <line x1="130" y1="102" x2="150" y2="62" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arr5)"/>
+      <line x1="230" y1="52" x2="320" y2="52" stroke="#BA7517" stroke-width="1.5" marker-end="url(#arr5)"/>
+      <text x="328" y="56" font-size="14" font-weight="700" fill="#BA7517">S (Sum)</text>
+
+      <!-- AND gate (Carry) -->
+      <rect x="150" y="82" width="80" height="40" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="2"/>
+      <text x="190" y="107" text-anchor="middle" font-size="14" font-weight="700" fill="#085041">AND</text>
+      <line x1="130" y1="52" x2="150" y2="89" stroke="#BA7517" stroke-width="1.2" stroke-dasharray="3,2" marker-end="url(#arr5)"/>
+      <line x1="130" y1="102" x2="150" y2="102" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arr5)"/>
+      <line x1="230" y1="102" x2="320" y2="102" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arr5)"/>
+      <text x="328" y="106" font-size="14" font-weight="700" fill="#0F6E56">C (Carry)</text>
+
+      <text x="340" y="145" text-anchor="middle" font-size="12" fill="#5F5E5A">Half Adder Logic Diagram</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================= ADVANTAGES OF MUX ============================= -->
+<div class="section" id="adv-mux">
+  <h2>8. Advantages of Multiplexer</h2>
+  <ul style="padding-left:20px;line-height:2.2">
+    <li>Reduces number of data transmission lines (N-to-1)</li>
+    <li>Saves hardware cost and board space</li>
+    <li>Can implement any Boolean function directly</li>
+    <li>Increases data bandwidth and reduces circuit complexity</li>
+    <li>Can be used as a universal combinational circuit</li>
+    <li>Easy to cascade for larger MUX (e.g., two 4:1 → 8:1)</li>
+  </ul>
+</div>
+
+<!-- ============================= 4:1 MUX USING 2:1 ============================= -->
+<div class="section" id="mux41">
+  <h2>9. 4:1 MUX using 2:1 MUX</h2>
+  <p>Three 2:1 MUXes are needed to build one 4:1 MUX.</p>
+  <div class="info">Level 1: Two 2:1 MUXes select among I₀,I₁ (controlled by S₀) and I₂,I₃ (controlled by S₀). Level 2: One 2:1 MUX selects between outputs of Level 1 (controlled by S₁).</div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="arr6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+      <!-- MUX1 (I0, I1) -->
+      <polygon points="130,20 200,35 200,85 130,100" fill="#E6F1FB" stroke="#185FA5" stroke-width="2"/>
+      <text x="165" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="#0C447C">2:1 MUX</text>
+      <text x="90" y="40" font-size="12" fill="#333">I₀</text><line x1="110" y1="37" x2="130" y2="43" stroke="#333" stroke-width="1.2" marker-end="url(#arr6)"/>
+      <text x="90" y="80" font-size="12" fill="#333">I₁</text><line x1="110" y1="77" x2="130" y2="76" stroke="#333" stroke-width="1.2" marker-end="url(#arr6)"/>
+      <text x="155" y="108" font-size="11" fill="#534AB7">S₀</text>
+      <line x1="165" y1="104" x2="165" y2="95" stroke="#534AB7" stroke-width="1.2" marker-end="url(#arr6)"/>
+      <line x1="200" y1="60" x2="400" y2="60" stroke="#185FA5" stroke-width="1.5" marker-end="url(#arr6)"/>
+
+      <!-- MUX2 (I2, I3) -->
+      <polygon points="130,110 200,125 200,175 130,190" fill="#E1F5EE" stroke="#0F6E56" stroke-width="2"/>
+      <text x="165" y="152" text-anchor="middle" font-size="12" font-weight="700" fill="#085041">2:1 MUX</text>
+      <text x="90" y="130" font-size="12" fill="#333">I₂</text><line x1="110" y1="127" x2="130" y2="133" stroke="#333" stroke-width="1.2" marker-end="url(#arr6)"/>
+      <text x="90" y="170" font-size="12" fill="#333">I₃</text><line x1="110" y1="167" x2="130" y2="166" stroke="#333" stroke-width="1.2" marker-end="url(#arr6)"/>
+      <text x="155" y="196" font-size="11" fill="#534AB7">S₀</text>
+      <line x1="165" y1="193" x2="165" y2="183" stroke="#534AB7" stroke-width="1.2" marker-end="url(#arr6)"/>
+      <line x1="200" y1="150" x2="400" y2="150" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arr6)"/>
+
+      <!-- MUX3 final -->
+      <polygon points="400,40 480,60 480,150 400,170" fill="#FAEEDA" stroke="#BA7517" stroke-width="2"/>
+      <text x="440" y="100" text-anchor="middle" font-size="12" font-weight="700" fill="#633806">2:1 MUX</text>
+      <text x="440" y="185" font-size="11" fill="#534AB7">S₁</text>
+      <line x1="440" y1="182" x2="440" y2="170" stroke="#534AB7" stroke-width="1.2" marker-end="url(#arr6)"/>
+      <line x1="480" y1="105" x2="560" y2="105" stroke="#BA7517" stroke-width="2" marker-end="url(#arr6)"/>
+      <text x="568" y="109" font-size="14" font-weight="700" fill="#BA7517">Y</text>
+
+      <text x="340" y="22" text-anchor="middle" font-size="12" fill="#5F5E5A">4:1 MUX from three 2:1 MUXes</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================= COMBINATIONAL CIRCUIT ============================= -->
+<div class="section" id="comb">
+  <h2>10. Combinational Circuit</h2>
+  <p>A <strong>combinational circuit</strong> is a digital circuit whose outputs depend only on present inputs, with NO memory or feedback.</p>
+  <div class="cols2">
+    <div class="gate-box">
+      <h4>Characteristics</h4>
+      <ul style="text-align:left;padding-left:16px;font-size:13px;line-height:2">
+        <li>Output = f(current inputs only)</li>
+        <li>No clock signal needed</li>
+        <li>No memory element</li>
+        <li>Described by Boolean equations</li>
+      </ul>
+    </div>
+    <div class="gate-box">
+      <h4>Examples</h4>
+      <ul style="text-align:left;padding-left:16px;font-size:13px;line-height:2">
+        <li>Half Adder / Full Adder</li>
+        <li>Multiplexer / Demultiplexer</li>
+        <li>Encoder / Decoder</li>
+        <li>Comparator</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============================= COUNTER AND TYPES ============================= -->
+<div class="section" id="counter">
+  <h2>11. Counter and Types</h2>
+  <p>A <strong>counter</strong> is a sequential circuit that counts clock pulses and cycles through a sequence of states.</p>
+  <table>
+    <tr><th>Type</th><th>Characteristic</th><th>Example</th></tr>
+    <tr><td>Asynchronous (Ripple)</td><td>Each FF clocked by previous FF output</td><td>4-bit ripple counter</td></tr>
+    <tr><td>Synchronous</td><td>All FFs clocked simultaneously</td><td>MOD-16 counter</td></tr>
+    <tr><td>Up Counter</td><td>Counts 0,1,2,...,N</td><td>BCD counter</td></tr>
+    <tr><td>Down Counter</td><td>Counts N,...,2,1,0</td><td>Countdown timer</td></tr>
+    <tr><td>MOD-N Counter</td><td>Counts 0 to N-1 then resets</td><td>MOD-10 (decade)</td></tr>
+    <tr><td>Ring Counter</td><td>Single 1 circulates through FFs</td><td>4-bit ring</td></tr>
+  </table>
+</div>
+
+<!-- ============================= RIPPLE COUNTER MOD-10 ============================= -->
+<div class="section" id="ripple">
+  <h2>12. Ripple Counter (MOD-10)</h2>
+  <p>A <strong>MOD-10 (decade) counter</strong> counts from 0 to 9, then resets to 0. It uses 4 JK flip-flops.</p>
+
+  <h3>State Sequence</h3>
+  <table>
+    <tr><th>Count</th><th>Q₃</th><th>Q₂</th><th>Q₁</th><th>Q₀</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>2</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>3</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>4</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>5</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>6</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+    <tr><td>7</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>8</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>9</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr class="highlight"><td>10 (1010)</td><td>1</td><td>0</td><td>1</td><td>0</td><td>← CLR signal</td></tr>
+  </table>
+
+  <div class="note">🔄 When count reaches 10 (1010), Q₃ and Q₁ are both 1. NAND(Q₃,Q₁) drives CLR to reset all flip-flops back to 0000.</div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 680 180" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="arr7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+      <!-- 4 JK Flip Flops -->
+      <!-- FF0 -->
+      <rect x="30" y="50" width="80" height="70" rx="6" fill="#E6F1FB" stroke="#185FA5" stroke-width="2"/>
+      <text x="70" y="80" text-anchor="middle" font-size="12" font-weight="700" fill="#0C447C">JK-FF₀</text>
+      <text x="70" y="96" text-anchor="middle" font-size="11" fill="#0C447C">Q₀</text>
+
+      <!-- FF1 -->
+      <rect x="170" y="50" width="80" height="70" rx="6" fill="#E6F1FB" stroke="#185FA5" stroke-width="2"/>
+      <text x="210" y="80" text-anchor="middle" font-size="12" font-weight="700" fill="#0C447C">JK-FF₁</text>
+      <text x="210" y="96" text-anchor="middle" font-size="11" fill="#0C447C">Q₁</text>
+
+      <!-- FF2 -->
+      <rect x="310" y="50" width="80" height="70" rx="6" fill="#E6F1FB" stroke="#185FA5" stroke-width="2"/>
+      <text x="350" y="80" text-anchor="middle" font-size="12" font-weight="700" fill="#0C447C">JK-FF₂</text>
+      <text x="350" y="96" text-anchor="middle" font-size="11" fill="#0C447C">Q₂</text>
+
+      <!-- FF3 -->
+      <rect x="450" y="50" width="80" height="70" rx="6" fill="#E6F1FB" stroke="#185FA5" stroke-width="2"/>
+      <text x="490" y="80" text-anchor="middle" font-size="12" font-weight="700" fill="#0C447C">JK-FF₃</text>
+      <text x="490" y="96" text-anchor="middle" font-size="11" fill="#0C447C">Q₃</text>
+
+      <!-- CLK input -->
+      <text x="5" y="90" font-size="11" fill="#534AB7">CLK</text>
+      <line x1="28" y1="87" x2="30" y2="87" stroke="#534AB7" stroke-width="1.5" marker-end="url(#arr7)"/>
+
+      <!-- Q₀ → CLK of FF1 ripple connections -->
+      <line x1="110" y1="85" x2="170" y2="85" stroke="#333" stroke-width="1.5" marker-end="url(#arr7)"/>
+      <line x1="250" y1="85" x2="310" y2="85" stroke="#333" stroke-width="1.5" marker-end="url(#arr7)"/>
+      <line x1="390" y1="85" x2="450" y2="85" stroke="#333" stroke-width="1.5" marker-end="url(#arr7)"/>
+
+      <!-- NAND gate for CLR -->
+      <rect x="580" y="60" width="60" height="40" rx="6" fill="#FAECE7" stroke="#993C1D" stroke-width="1.5"/>
+      <text x="610" y="84" text-anchor="middle" font-size="12" font-weight="700" fill="#4A1B0C">NAND</text>
+      <line x1="530" y1="90" x2="580" y2="80" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr7)"/>
+      <line x1="350" y1="90" x2="400" y2="90" stroke="#993C1D" stroke-width="1.2"/>
+      <line x1="400" y1="90" x2="400" y2="140" stroke="#993C1D" stroke-width="1.2"/>
+      <line x1="400" y1="140" x2="610" y2="140" stroke="#993C1D" stroke-width="1.2"/>
+      <line x1="610" y1="140" x2="610" y2="100" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr7)"/>
+
+      <!-- CLR feedback to all FFs -->
+      <line x1="640" y1="80" x2="650" y2="80" stroke="#993C1D" stroke-width="1.5"/>
+      <line x1="650" y1="80" x2="650" y2="160" stroke="#993C1D" stroke-width="1.5"/>
+      <line x1="650" y1="160" x2="70" y2="160" stroke="#993C1D" stroke-width="1.5"/>
+      <text x="340" y="175" text-anchor="middle" font-size="11" fill="#993C1D">CLR → resets all FFs when count=10 (1010)</text>
+
+      <text x="200" y="30" text-anchor="middle" font-size="13" font-weight="600" fill="#0C447C">MOD-10 Ripple Counter</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================= RACE AROUND ============================= -->
+<div class="section" id="race">
+  <h2>13. Race Around Condition in JK Flip-Flop</h2>
+
+  <p>When <strong>J=1 and K=1</strong>, the output should toggle. But if the clock pulse duration is long, the output may toggle multiple times within a single clock period — this is called the <strong>Race Around Condition</strong>.</p>
+
+  <h3>Why it Occurs</h3>
+  <p>The propagation delay through the flip-flop is less than the clock pulse width. So Q̄ feeds back to the input, causing repeated toggling during the HIGH period of the clock.</p>
+
+  <div class="note">⚠️ Race occurs when: Clock pulse width > propagation delay of flip-flop</div>
+
+  <h3>Solutions</h3>
+  <table>
+    <tr><th>Solution</th><th>Description</th></tr>
+    <tr><td>Master-Slave JK FF</td><td>Two latches in series; output changes only on clock edge, not during pulse</td></tr>
+    <tr><td>Edge-Triggered FF</td><td>State changes only on rising or falling edge of clock (not during high/low period)</td></tr>
+    <tr><td>Reduce clock pulse width</td><td>Make pulse width less than propagation delay (difficult in practice)</td></tr>
+  </table>
+
+  <div class="success">✅ Best solution: Use <strong>Edge-Triggered JK Flip-Flop</strong> or <strong>Master-Slave configuration</strong>.</div>
+</div>
+
+<!-- ============================= MUX vs DEMUX ============================= -->
+<div class="section" id="mux-demux-diff">
+  <h2>14. Multiplexer vs Demultiplexer</h2>
+  <table>
+    <tr><th>Feature</th><th>Multiplexer (MUX)</th><th>Demultiplexer (DEMUX)</th></tr>
+    <tr><td>Function</td><td>Many-to-one</td><td>One-to-many</td></tr>
+    <tr><td>Inputs</td><td>2ⁿ data inputs</td><td>1 data input</td></tr>
+    <tr><td>Outputs</td><td>1 output</td><td>2ⁿ outputs</td></tr>
+    <tr><td>Select lines</td><td>n lines to select input</td><td>n lines to select output</td></tr>
+    <tr><td>Also called</td><td>Data selector</td><td>Data distributor</td></tr>
+    <tr><td>Example</td><td>8:1 MUX (8 inputs, 1 output, 3 select)</td><td>1:8 DEMUX (1 input, 8 outputs, 3 select)</td></tr>
+    <tr><td>Use</td><td>Combine multiple signals on one line</td><td>Route one signal to multiple destinations</td></tr>
+  </table>
+</div>
+
+<!-- ============================= 32:1 MUX SELECT LINES ============================= -->
+<div class="section" id="select">
+  <h2>15. 32:1 MUX – Number of Select Lines</h2>
+  <div class="formula">For a 2ⁿ : 1 MUX → n select lines needed<br><br>32 = 2⁵ → n = 5 select lines</div>
+  <div class="success">✅ A 32:1 MUX requires <strong>5 select lines</strong></div>
+  <table>
+    <tr><th>MUX Type</th><th>Inputs</th><th>Select Lines</th></tr>
+    <tr><td>2:1</td><td>2</td><td>1</td></tr>
+    <tr><td>4:1</td><td>4</td><td>2</td></tr>
+    <tr><td>8:1</td><td>8</td><td>3</td></tr>
+    <tr><td>16:1</td><td>16</td><td>4</td></tr>
+    <tr class="highlight"><td>32:1</td><td>32</td><td>5</td></tr>
+    <tr><td>64:1</td><td>64</td><td>6</td></tr>
+  </table>
+</div>
+
+<!-- ============================= APPLICATIONS OF FLIP FLOP ============================= -->
+<div class="section" id="ff-apps">
+  <h2>16. Applications of Flip-Flop</h2>
+  <table>
+    <tr><th>Application</th><th>Description</th></tr>
+    <tr><td>Registers</td><td>Store binary data (8-bit, 16-bit registers in CPU)</td></tr>
+    <tr><td>Counters</td><td>Count clock pulses (up/down/MOD-N counters)</td></tr>
+    <tr><td>Shift Registers</td><td>Serial-to-parallel and parallel-to-serial conversion</td></tr>
+    <tr><td>Memory cells</td><td>SRAM uses D flip-flops as basic storage element</td></tr>
+    <tr><td>Frequency divider</td><td>T flip-flop divides clock frequency by 2</td></tr>
+    <tr><td>Sequence detectors</td><td>Detect specific bit patterns in data stream</td></tr>
+    <tr><td>Synchronizers</td><td>Synchronize asynchronous signals to clock domain</td></tr>
+  </table>
+</div>
+
+<!-- ============================= STEPS FOR COMBINATIONAL CIRCUIT ============================= -->
+<div class="section" id="steps">
+  <h2>17. Steps for Combinational Circuit Design</h2>
+  <ol style="padding-left:20px;line-height:2.4;font-size:15px">
+    <li><strong>Step 1:</strong> Understand the problem and identify number of inputs and outputs</li>
+    <li><strong>Step 2:</strong> Assign binary variables to inputs and outputs</li>
+    <li><strong>Step 3:</strong> Construct the truth table for all input combinations</li>
+    <li><strong>Step 4:</strong> Obtain simplified Boolean expression using K-map or algebraic simplification</li>
+    <li><strong>Step 5:</strong> Implement the simplified expression using logic gates</li>
+    <li><strong>Step 6:</strong> Verify the circuit against the truth table</li>
+  </ol>
+</div>
+
+<!-- ============================= FULL ADDER USING 2 HALF ADDERS ============================= -->
+<div class="section" id="full-two-half">
+  <h2>18. Full Adder using Two Half Adders</h2>
+  <p>A Full Adder can be built using two Half Adders (HA) and one OR gate.</p>
+
+  <div class="formula">
+    Stage 1 (HA1): S₁ = A ⊕ B,  C₁ = A·B<br>
+    Stage 2 (HA2): Sum = S₁ ⊕ Cin,  C₂ = S₁·Cin<br>
+    Final: Cout = C₁ + C₂
+  </div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="arr8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+      <!-- Inputs -->
+      <text x="10" y="70" font-size="13" font-weight="700" fill="#BA7517">A</text>
+      <text x="10" y="100" font-size="13" font-weight="700" fill="#0F6E56">B</text>
+      <text x="10" y="140" font-size="13" font-weight="700" fill="#534AB7">Cin</text>
+
+      <line x1="25" y1="67" x2="90" y2="67" stroke="#BA7517" stroke-width="1.5" marker-end="url(#arr8)"/>
+      <line x1="25" y1="97" x2="90" y2="97" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arr8)"/>
+
+      <!-- HA1 -->
+      <rect x="90" y="50" width="100" height="70" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="2"/>
+      <text x="140" y="82" text-anchor="middle" font-size="14" font-weight="700" fill="#0C447C">HA 1</text>
+      <text x="140" y="98" text-anchor="middle" font-size="11" fill="#0C447C">A, B</text>
+
+      <!-- HA1 outputs: S1, C1 -->
+      <line x1="190" y1="68" x2="290" y2="68" stroke="#BA7517" stroke-width="1.5" marker-end="url(#arr8)"/>
+      <text x="205" y="63" font-size="11" fill="#BA7517">S₁</text>
+      <line x1="190" y1="102" x2="225" y2="102" stroke="#0F6E56" stroke-width="1.5"/>
+      <text x="205" y="115" font-size="11" fill="#0F6E56">C₁</text>
+
+      <!-- Cin to HA2 -->
+      <line x1="25" y1="137" x2="290" y2="100" stroke="#534AB7" stroke-width="1.5" marker-end="url(#arr8)"/>
+
+      <!-- HA2 -->
+      <rect x="290" y="50" width="100" height="70" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="2"/>
+      <text x="340" y="82" text-anchor="middle" font-size="14" font-weight="700" fill="#085041">HA 2</text>
+      <text x="340" y="98" text-anchor="middle" font-size="11" fill="#085041">S₁, Cin</text>
+
+      <!-- HA2 outputs: Sum, C2 -->
+      <line x1="390" y1="68" x2="580" y2="68" stroke="#BA7517" stroke-width="2" marker-end="url(#arr8)"/>
+      <text x="588" y="72" font-size="13" font-weight="700" fill="#BA7517">Sum</text>
+      <line x1="390" y1="102" x2="450" y2="102" stroke="#0F6E56" stroke-width="1.5"/>
+      <text x="405" y="116" font-size="11" fill="#0F6E56">C₂</text>
+
+      <!-- OR gate -->
+      <rect x="450" y="120" width="70" height="40" rx="8" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.5"/>
+      <text x="485" y="144" text-anchor="middle" font-size="13" font-weight="700" fill="#633806">OR</text>
+      <line x1="225" y1="102" x2="225" y2="135" stroke="#0F6E56" stroke-width="1.2"/>
+      <line x1="225" y1="135" x2="450" y2="135" stroke="#0F6E56" stroke-width="1.2" marker-end="url(#arr8)"/>
+      <line x1="450" y1="145" x2="450" y2="145" stroke="#0F6E56" stroke-width="1.2"/>
+      <line x1="390" y1="102" x2="430" y2="102" stroke="#0F6E56" stroke-width="1.2"/>
+      <line x1="430" y1="102" x2="430" y2="145" stroke="#0F6E56" stroke-width="1.2"/>
+      <line x1="430" y1="145" x2="450" y2="145" stroke="#0F6E56" stroke-width="1.2" marker-end="url(#arr8)"/>
+      <line x1="520" y1="140" x2="580" y2="140" stroke="#0F6E56" stroke-width="2" marker-end="url(#arr8)"/>
+      <text x="588" y="144" font-size="13" font-weight="700" fill="#0F6E56">Cout</text>
+
+      <text x="340" y="185" text-anchor="middle" font-size="12" fill="#5F5E5A">Full Adder using Two Half Adders + OR gate</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================= SHIFT REGISTER ============================= -->
+<div class="section" id="shift">
+  <h2>19. Classification of Shift Registers</h2>
+  <table>
+    <tr><th>Type</th><th>Input</th><th>Output</th><th>Use</th></tr>
+    <tr><td>SISO</td><td>Serial</td><td>Serial</td><td>Data delay, time delays</td></tr>
+    <tr><td>SIPO</td><td>Serial</td><td>Parallel</td><td>Serial-to-parallel conversion</td></tr>
+    <tr><td>PISO</td><td>Parallel</td><td>Serial</td><td>Parallel-to-serial conversion</td></tr>
+    <tr><td>PIPO</td><td>Parallel</td><td>Parallel</td><td>Temporary data storage</td></tr>
+    <tr><td>Bidirectional</td><td>Either</td><td>Either</td><td>Can shift left or right</td></tr>
+    <tr><td>Ring Counter</td><td>Feedback</td><td>Recirculating</td><td>Sequence generation</td></tr>
+  </table>
+  <div class="info">All shift registers use D or JK flip-flops in a chain. Data shifts one position per clock pulse.</div>
+</div>
+
+<!-- ============================= SYNC vs ASYNC ============================= -->
+<div class="section" id="sync-async">
+  <h2>20. Synchronous vs Asynchronous Counter</h2>
+  <table>
+    <tr><th>Feature</th><th>Synchronous</th><th>Asynchronous (Ripple)</th></tr>
+    <tr><td>Clock</td><td>All FFs clocked simultaneously</td><td>Each FF clocked by previous Q output</td></tr>
+    <tr><td>Speed</td><td>Faster (no ripple delay)</td><td>Slower (cumulative delay)</td></tr>
+    <tr><td>Complexity</td><td>More complex (combinational logic needed)</td><td>Simpler design</td></tr>
+    <tr><td>Glitches</td><td>Fewer glitches</td><td>More glitches due to propagation</td></tr>
+    <tr><td>Power</td><td>More power (all FFs switch)</td><td>Less power</td></tr>
+    <tr><td>Example</td><td>74LS163</td><td>74LS93</td></tr>
+  </table>
+</div>
+
+<!-- ============================= SEQUENTIAL CIRCUIT ============================= -->
+<div class="section" id="sequential">
+  <h2>21. Sequential Circuit – Definition &amp; Example</h2>
+  <p>A <strong>sequential circuit</strong> is a digital circuit whose output depends on both <strong>present inputs</strong> AND <strong>past history (stored state)</strong>. It contains memory elements (flip-flops).</p>
+
+  <div class="cols2">
+    <div class="gate-box">
+      <h4>Mealy Machine</h4>
+      <p style="font-size:13px">Output depends on present input AND present state</p>
+      <div style="font-size:12px;font-family:monospace;margin-top:8px">Output = f(State, Input)</div>
+    </div>
+    <div class="gate-box">
+      <h4>Moore Machine</h4>
+      <p style="font-size:13px">Output depends only on present state (not on input directly)</p>
+      <div style="font-size:12px;font-family:monospace;margin-top:8px">Output = f(State)</div>
+    </div>
+  </div>
+
+  <h3>Examples</h3>
+  <ul style="padding-left:20px;line-height:2.2">
+    <li>Flip-flops (SR, JK, D, T)</li>
+    <li>Counters (up, down, MOD-N)</li>
+    <li>Shift Registers</li>
+    <li>Sequence detectors</li>
+    <li>Traffic light controller</li>
+  </ul>
+</div>
+
+<!-- ============================= APPLICATIONS OF DECODER ============================= -->
+<div class="section" id="decoder-apps">
+  <h2>22. Applications of Decoder</h2>
+  <table>
+    <tr><th>Application</th><th>Description</th></tr>
+    <tr><td>Memory address decoding</td><td>Selects a specific memory chip from address bus</td></tr>
+    <tr><td>Combinational circuit implementation</td><td>Any function by connecting decoder outputs through OR gates</td></tr>
+    <tr><td>7-segment display driver</td><td>BCD to 7-segment decoder drives LED display digits</td></tr>
+    <tr><td>Instruction decoding in CPU</td><td>Decodes machine instruction opcodes to control signals</td></tr>
+    <tr><td>Code converters</td><td>BCD to binary, Gray code to binary conversion</td></tr>
+    <tr><td>Demultiplexer</td><td>1-to-N decoder acts as DEMUX with enable line as data input</td></tr>
+  </table>
+</div>
+
+<hr>
+<p style="text-align:center;color:var(--text2);font-size:13px">Digital Electronics Complete Study Guide · All topics covered with truth tables, equations &amp; circuit diagrams</p>
+
+</div>
+</body>
+</html>
